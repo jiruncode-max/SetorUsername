@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikRob — Member</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root{--bg:#07070d;--bg2:#0d0d16;--card:#131324;--accent:#00e5a0;--adim:rgba(0,229,160,.1);--aglow:rgba(0,229,160,.3);--cyan:#00d4ff;--warn:#ffa502;--danger:#ff4060;--text:#e2e2f0;--muted:#6a6a82;--border:#1f1f36}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+        .atmos{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(800px 600px at 10% 20%,rgba(0,229,160,.05),transparent 70%),radial-gradient(600px 600px at 90% 80%,rgba(0,212,255,.03),transparent 70%);animation:atm 18s ease-in-out infinite alternate}
+        @keyframes atm{0%{transform:translate(0,0)}100%{transform:translate(-20px,15px)}}
+        .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.02;background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px);background-size:70px 70px}
+        .orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(90px);opacity:.14}
+        .o1{width:320px;height:320px;background:var(--accent);top:-70px;left:-50px;animation:oa 20s ease-in-out infinite alternate}
+        .o2{width:250px;height:250px;background:var(--cyan);bottom:-40px;right:-30px;animation:ob 17s ease-in-out infinite alternate}
+        @keyframes oa{0%{transform:translate(0,0)}100%{transform:translate(35px,25px)}}
+        @keyframes ob{0%{transform:translate(0,0)}100%{transform:translate(-25px,-30px)}}
+        .inp{width:100%;padding:14px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:15px;transition:all .3s;outline:none}
+        .inp:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--adim),0 0 20px var(--adim)}
+        .inp::placeholder{color:var(--muted);font-family:'Space Grotesk',sans-serif}
+        .btn{width:100%;padding:15px 24px;border:none;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:all .3s}
+        .btn-go{background:linear-gradient(135deg,var(--accent),#00c48c);color:var(--bg)}
+        .btn-go:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--aglow)}
+        .btn-go:active{transform:translateY(0)}
+        .btn-go:disabled{opacity:.4;cursor:not-allowed;transform:none}
+        .btn-gh{padding:8px 16px;background:transparent;width:auto;color:var(--muted);border:1.5px solid var(--border);border-radius:10px;font-weight:500;font-size:12px;cursor:pointer;transition:all .3s;font-family:'Space Grotesk',sans-serif}
+        .btn-gh:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px}
+        .glow{height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.15}
+        .toast-box{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+        .toast{padding:13px 18px;border-radius:12px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;max-width:340px;backdrop-filter:blur(10px);animation:ti .3s ease}
+        .t-ok{background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--accent)}
+        .t-er{background:rgba(255,64,96,.1);border:1px solid rgba(255,64,96,.25);color:var(--danger)}
+        .t-in{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--cyan)}
+        @keyframes ti{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes to{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+        .page{display:none}.page.on{display:block;animation:pi .4s ease}
+        @keyframes pi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+        .logo{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),#00c48c);color:var(--bg);font-weight:700}
+        .spin{width:18px;height:18px;border:2.5px solid transparent;border-top-color:currentColor;border-radius:50%;animation:sp .6s linear infinite;display:inline-block}
+        @keyframes sp{to{transform:rotate(360deg)}}
+        .ic{display:flex;align-items:center;justify-content:center;border-radius:50%}
+        .badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:14px;font-size:10px;font-weight:600}
+        .b-new{background:rgba(0,229,160,.1);color:var(--accent);border:1px solid rgba(0,229,160,.2)}
+        .b-read{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
+    </style>
+</head>
+<body>
+<div class="atmos"></div><div class="grid-bg"></div><div class="orb o1"></div><div class="orb o2"></div>
+<div class="toast-box" id="TB"></div>
+
+<div style="position:relative;z-index:2;min-height:100vh;">
+
+    <!-- NAV -->
+    <nav style="position:sticky;top:0;z-index:50;background:rgba(7,7,13,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);">
+        <div style="max-width:600px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <div class="logo" style="width:32px;height:32px;font-size:14px;"><i class="fas fa-link"></i></div>
+                <span style="font-weight:700;font-size:16px;">TikRob</span>
+                <span style="font-size:10px;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:5px;border:1px solid var(--border);">MEMBER</span>
+            </div>
+            <button class="btn-gh" onclick="showPage('pgSetup')" style="font-size:10px;padding:4px 10px;"><i class="fas fa-gear"></i></button>
+        </div>
+    </nav>
+
+    <!-- ===== SETUP ===== -->
+    <div class="page" id="pgSetup">
+        <div style="max-width:520px;margin:0 auto;padding:48px 24px;">
+            <div class="card" style="display:flex;flex-direction:column;gap:20px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div class="logo" style="width:40px;height:40px;font-size:17px;"><i class="fas fa-database"></i></div>
+                    <div>
+                        <h1 style="font-size:20px;font-weight:700;">Pengaturan</h1>
+                        <p style="color:var(--muted);font-size:12px;">Set password admin</p>
+                    </div>
+                </div>
+                <div class="glow"></div>
+                <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;gap:10px;align-items:center;">
+                    <i class="fas fa-circle-check" style="color:var(--accent);font-size:14px;"></i>
+                    <div style="font-size:12px;color:var(--muted);">Database: <strong style="color:var(--accent);">npoint.io</strong> (sudah terhubung)</div>
+                </div>
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;">
+                        <i class="fas fa-lock" style="margin-right:5px;color:var(--warn);"></i> Password Admin
+                    </label>
+                    <input type="password" class="inp" id="sPw" placeholder="Buat password untuk admin">
+                    <p style="font-size:10px;color:var(--muted);margin-top:5px;">Password ini dipakai login di admin.html</p>
+                </div>
+                <button class="btn btn-go" onclick="savePw()"><i class="fas fa-check" style="margin-right:8px;"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MEMBER LOGIN ===== -->
+    <div class="page on" id="pgLogin">
+        <div style="max-width:460px;margin:0 auto;padding:60px 24px 40px;">
+            <div style="display:flex;flex-direction:column;gap:24px;align-items:center;">
+                <div class="ic" style="width:84px;height:84px;background:linear-gradient(135deg,rgba(0,229,160,.08),rgba(0,229,160,.02));border:1.5px solid rgba(0,229,160,.18);">
+                    <i class="fab fa-tiktok" style="font-size:36px;color:var(--accent);"></i>
+                </div>
+                <div style="text-align:center;">
+                    <h2 style="font-size:28px;font-weight:700;">Member Login</h2>
+                    <p style="color:var(--muted);margin-top:5px;font-size:14px;">Masukkan username TikTok kamu</p>
+                </div>
+                <div class="card" style="width:100%;display:flex;flex-direction:column;gap:16px;">
+                    <div>
+                        <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;">
+                            <i class="fab fa-tiktok" style="margin-right:5px;color:var(--accent);"></i> Username TikTok
+                        </label>
+                        <input type="text" class="inp" id="inTt" placeholder="@username_kamu" autocomplete="off">
+                    </div>
+                    <button class="btn btn-go" onclick="doLogin()">Masuk <i class="fas fa-arrow-right" style="margin-left:8px;"></i></button>
+                </div>
+                <a href="admin.html" style="color:var(--muted);font-size:13px;text-decoration:none;"><i class="fas fa-shield-halved" style="margin-right:4px;"></i> Masuk Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MEMBER KIRIM ===== -->
+    <div class="page" id="pgSend">
+        <div style="max-width:500px;margin:0 auto;padding:36px 24px;">
+            <div style="display:flex;flex-direction:column;gap:24px;align-items:center;">
+                <div class="ic" style="width:76px;height:76px;background:linear-gradient(135deg,rgba(0,229,160,.08),rgba(0,212,255,.03));border:1.5px solid rgba(0,229,160,.18);">
+                    <i class="fas fa-paper-plane" style="font-size:30px;color:var(--accent);"></i>
+                </div>
+                <div style="text-align:center;">
+                    <h2 style="font-size:24px;font-weight:700;">Kirim Username Roblox</h2>
+                    <p style="color:var(--muted);margin-top:4px;font-size:13px;">Login sebagai <strong id="dUser" style="color:var(--accent);"></strong></p>
+                </div>
+                <div class="card" style="width:100%;display:flex;flex-direction:column;gap:18px;">
+                    <div>
+                        <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;">
+                            <i class="fas fa-gamepad" style="margin-right:5px;color:var(--cyan);"></i> Username Roblox
+                        </label>
+                        <input type="text" class="inp" id="inRb" placeholder="username_roblox" autocomplete="off">
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;">
+                            <i class="fas fa-message" style="margin-right:5px;color:var(--accent);"></i> Pesan (Opsional)
+                        </label>
+                        <textarea class="inp" id="inMsg" placeholder="Tulis pesan tambahan..." rows="3" style="resize:vertical;min-height:60px;font-family:'Space Grotesk',sans-serif;"></textarea>
+                    </div>
+                    <button class="btn btn-go" id="bSend" onclick="doSend()"><i class="fas fa-paper-plane" style="margin-right:8px;"></i> Kirim</button>
+                </div>
+                <div class="card" id="hCard" style="width:100%;display:none;">
+                    <h3 style="font-size:13px;font-weight:600;margin-bottom:12px;"><i class="fas fa-clock-rotate-left" style="margin-right:6px;color:var(--accent);"></i> Riwayat</h3>
+                    <div id="hList" style="display:flex;flex-direction:column;gap:7px;"></div>
+                </div>
+                <button onclick="doLogout()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:13px;font-family:'Space Grotesk',sans-serif;"><i class="fas fa-right-from-bracket" style="margin-right:4px;"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ===== DATABASE: NPOINT.IO ===== */
+const NP_ID = 'a93e08ea530468333497';
+const NP_URL = 'https://api.npoint.io/' + NP_ID;
+const PW_KEY = 'tikrob_admin_pw';
+let curUser = '';
+
+async function npGet() { const r = await fetch(NP_URL); if (!r.ok) throw new Error('Gagal baca: ' + r.status); return r.json(); }
+async function npPut(data) { const r = await fetch(NP_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); if (!r.ok) throw new Error('Gagal simpan: ' + r.status); return r.json(); }
+function getPw() { return localStorage.getItem(PW_KEY) || ''; }
+
+/* ===== TOAST ===== */
+function toast(msg, t = 'ok') {
+    const c = document.getElementById('TB'), el = document.createElement('div');
+    const ic = { ok: 'fa-check-circle', er: 'fa-exclamation-circle', in: 'fa-info-circle' };
+    el.className = 'toast t-' + ({ ok: 'ok', er: 'er', in: 'in' }[t] || 'ok');
+    el.innerHTML = '<i class="fas ' + (ic[t] || ic.ok) + '"></i><span>' + msg + '</span>';
+    c.appendChild(el);
+    setTimeout(() => { el.style.animation = 'to .3s ease forwards'; setTimeout(() => el.remove(), 300); }, 3000);
+}
+
+/* ===== PAGE ===== */
+function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('on')); document.getElementById(id).classList.add('on'); }
+
+/* ===== UTILS ===== */
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function fmtT(iso) {
+    const d = new Date(iso), n = new Date(), df = n - d;
+    if (df < 6e4) return 'Baru saja';
+    if (df < 36e5) return Math.floor(df / 6e4) + ' menit lalu';
+    if (df < 864e5) return Math.floor(df / 36e5) + ' jam lalu';
+    return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+}
+
+/* ===== SETUP ===== */
+function savePw() {
+    const p = document.getElementById('sPw').value.trim();
+    if (!p || p.length < 4) { toast('Password min 4 karakter', 'er'); return; }
+    localStorage.setItem(PW_KEY, p);
+    toast('Password tersimpan!');
+    setTimeout(() => showPage('pgLogin'), 500);
+}
+
+/* ===== LOGIN ===== */
+function doLogin() {
+    const v = document.getElementById('inTt').value.trim();
+    if (!v) { toast('Masukkan username TikTok', 'er'); return; }
+    curUser = v.startsWith('@') ? v : '@' + v;
+    document.getElementById('dUser').textContent = curUser;
+    showPage('pgSend');
+    loadHist();
+    toast('Selamat datang, ' + curUser + '!');
+}
+function doLogout() {
+    curUser = '';
+    document.getElementById('inTt').value = '';
+    document.getElementById('inRb').value = '';
+    document.getElementById('inMsg').value = '';
+    document.getElementById('hCard').style.display = 'none';
+    showPage('pgLogin');
+}
+
+/* ===== KIRIM ===== */
+async function doSend() {
+    const rb = document.getElementById('inRb').value.trim();
+    const msg = document.getElementById('inMsg').value.trim();
+    if (!rb) { toast('Masukkan username Roblox', 'er'); return; }
+
+    const b = document.getElementById('bSend');
+    b.innerHTML = '<span class="spin"></span> Mengirim...'; b.disabled = true;
+
+    try {
+        const d = await npGet();
+        const msgs = d.messages || [];
+        msgs.push({
+            id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+            tiktok: curUser,
+            roblox: rb,
+            message: msg || '-',
+            status: 'new',
+            time: new Date().toISOString()
+        });
+        await npPut({ messages: msgs });
+        toast('Pesan terkirim!');
+        document.getElementById('inRb').value = '';
+        document.getElementById('inMsg').value = '';
+        loadHist();
+    } catch (e) {
+        toast('Gagal: ' + e.message, 'er');
+    }
+
+    b.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:8px;"></i> Kirim'; b.disabled = false;
+}
+
+/* ===== RIWAYAT ===== */
+async function loadHist() {
+    if (!curUser) return;
+    try {
+        const d = await npGet();
+        const msgs = (d.messages || []).filter(m => m.tiktok === curUser).reverse();
+        const c = document.getElementById('hList'), w = document.getElementById('hCard');
+        if (!msgs.length) { w.style.display = 'none'; return; }
+        w.style.display = 'block';
+        c.innerHTML = msgs.map(m => `
+            <div style="background:var(--bg2);border-radius:10px;padding:10px 14px;border:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);"><i class="fas fa-gamepad" style="margin-right:4px;"></i>${esc(m.roblox)}</span>
+                    <span class="badge ${m.status==='new'?'b-new':'b-read'}">${m.status==='new'?'Baru':'Dibaca'}</span>
+                </div>
+                ${m.message!=='-'?'<p style="font-size:11px;color:var(--muted);margin-bottom:2px;">'+esc(m.message)+'</p>':''}
+                <span style="font-size:10px;color:var(--muted);">${fmtT(m.time)}</span>
+            </div>
+        `).join('');
+    } catch (e) { /* silent */ }
+}
+
+/* ===== ENTER KEY ===== */
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (document.getElementById('pgSetup').classList.contains('on')) savePw();
+    else if (document.getElementById('pgLogin').classList.contains('on')) doLogin();
+    else if (document.getElementById('pgSend').classList.contains('on')) doSend();
+});
+
+/* ===== INIT ===== */
+window.addEventListener('DOMContentLoaded', () => {
+    const pw = getPw();
+    if (pw) document.getElementById('sPw').value = pw;
+});
+</script>
+</body>
+</html>
