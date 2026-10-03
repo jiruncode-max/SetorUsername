@@ -1,0 +1,266 @@
+:root {
+    --text-primary: #ffffff;
+    --text-secondary: #bdbebe;
+    --text-muted: #8a8c8e;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --btn-hover: rgba(255, 255, 255, 0.12);
+    --accent: #335fff;
+    --accent-hover: #2a4fe0;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0; padding: 0;
+    min-height: 100vh;
+    color: var(--text-primary);
+    font-family: 'Inter', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    background: #191b1d;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ===== FOTO — HD RENDERING ===== */
+.bg-photo {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
+    z-index: 0;
+    background: #191b1d;
+}
+.bg-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+    filter: contrast(1.06) saturate(1.08);
+}
+
+::-webkit-scrollbar { width: 0; height: 0; }
+
+/* ===== HEADER ===== */
+.rbx-header {
+    background-color: rgba(18, 20, 22, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 60px; padding: 0 16px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: sticky; top: 0; z-index: 100;
+}
+
+.rbx-header-left { display: flex; align-items: center; }
+
+/* ===== LOGO ROBLOX (O PERTAMA = KOTAK MIRING, O KEDUA = BIASA) ===== */
+.rbx-logo-link {
+    display: flex; align-items: center; text-decoration: none;
+    color: var(--text-primary);
+}
+.rbx-logo-text {
+    font-weight: 900; font-size: 21px; color: #fff; line-height: 1;
+    letter-spacing: 0.5px;
+}
+.rbx-logo-o {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 5px solid #fff;
+    border-radius: 3px;
+    transform: rotate(15deg);
+    margin: 0 4px;
+}
+
+.rbx-header-center { flex-grow: 1; max-width: 560px; margin: 0 16px; position: relative; }
+.rbx-search-input {
+    width: 100%; padding: 11px 14px 11px 44px; border-radius: 10px;
+    border: 1px solid transparent; background-color: rgba(255,255,255,0.1);
+    font-family: inherit; font-size: 15px; color: var(--text-primary); outline: none;
+    transition: 0.2s;
+}
+.rbx-search-input::placeholder { color: var(--text-muted); }
+.rbx-search-input:focus { border-color: var(--accent); background-color: rgba(0,0,0,0.4); }
+.rbx-icon-search {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 20px; fill: var(--text-muted); pointer-events: none;
+}
+
+.rbx-header-right { display: flex; align-items: center; gap: 8px; }
+
+/* ===== TOMBOL SEND ===== */
+.send-btn {
+    background-color: var(--accent); color: #fff; font-weight: 700; font-size: 14px;
+    padding: 9px 18px; border-radius: 8px; display: flex; align-items: center; gap: 6px;
+    cursor: pointer; transition: 0.2s; border: none; font-family: inherit;
+}
+.send-btn:hover { background-color: var(--accent-hover); transform: translateY(-1px); }
+.send-btn svg { width: 16px; height: 16px; fill: #fff; }
+
+/* ===== ICON ROBUX + SALDO ===== */
+.rbx-balance-display {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 12px;
+}
+.rbx-robux-svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+.rbx-balance { font-weight: 700; font-size: 15px; color: var(--text-primary); }
+
+.rbx-user-chip {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 5px 10px 5px 5px; border-radius: 999px; transition: 0.2s;
+}
+.rbx-user-chip:hover { background-color: var(--btn-hover); }
+.rbx-user-chip span { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+
+.avatar-circle {
+    position: relative; width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #335fff, #7b3fff);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: #fff; overflow: hidden;
+    flex-shrink: 0;
+}
+.avatar-circle img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+
+/* ===== ICON PENGATURAN ===== */
+.rbx-icon-btn {
+    width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; transition: 0.2s;
+}
+.rbx-icon-btn:hover { background-color: var(--btn-hover); }
+.rbx-icon-btn svg { width: 22px; height: 22px; fill: var(--text-primary); }
+
+/* ===== MODAL UMUM ===== */
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+.modal {
+    background-color: rgba(35, 37, 39, 0.97); color: var(--text-primary);
+    border-radius: 14px; width: 90%; max-width: 380px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6); padding: 24px;
+    text-align: center; border: 1px solid var(--border-color);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-title { font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 18px; }
+.modal-title .rbx-robux-svg { width: 22px; height: 22px; }
+.modal-balance {
+    font-weight: 700; display: flex; align-items: center; gap: 5px;
+    font-size: 15px; color: var(--text-secondary);
+}
+.modal-balance .rbx-robux-svg { width: 16px; height: 16px; }
+.close-btn { border: none; background: none; font-size: 26px; color: var(--text-muted); cursor: pointer; padding: 0; line-height: 1; }
+.close-btn:hover { color: var(--text-primary); }
+
+.input-box {
+    width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;
+    font-size: 16px; outline: none; font-weight: 600; font-family: inherit;
+    background-color: rgba(0,0,0,0.35); color: var(--text-primary); transition: 0.2s;
+}
+.input-box::placeholder { color: var(--text-muted); font-weight: 500; }
+.input-box:focus { border-color: var(--accent); }
+.search-status { font-size: 12px; font-weight: 600; margin-top: 8px; min-height: 15px; text-align: left; }
+
+/* ===== SARAN USERS LIVE ===== */
+.search-wrap { position: relative; }
+.suggestions-box {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    margin-top: 6px;
+    background: #2a2c2e;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    z-index: 200;
+    overflow: hidden;
+    text-align: left;
+    max-height: 220px;
+    overflow-y: auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.suggestion-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; cursor: pointer; transition: 0.15s;
+}
+.suggestion-item:hover { background-color: rgba(255,255,255,0.08); }
+.suggestion-item img {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover; background: linear-gradient(135deg, #335fff, #7b3fff);
+    flex-shrink: 0;
+}
+.suggestion-info { min-width: 0; }
+.suggestion-name { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.suggestion-username { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+
+.primary-btn {
+    background-color: var(--accent); color: white; border: none; width: 100%; padding: 12px;
+    border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 15px;
+    font-family: inherit; transition: 0.2s;
+}
+.primary-btn:hover { background-color: var(--accent-hover); }
+.primary-btn:disabled { background-color: rgba(255,255,255,0.1); color: var(--text-muted); cursor: not-allowed; }
+
+.user-profile { margin-bottom: 20px; }
+.modal-avatar {
+    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px; overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, #335fff, #7b3fff);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 30px; color: #fff; position: relative;
+}
+.modal-avatar img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none;
+}
+.display-name { font-weight: 800; font-size: 18px; margin-bottom: 2px; }
+.username-tag { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
+
+.amount-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 25px 0; }
+.amount-wrapper .rbx-robux-svg { width: 38px; height: 38px; }
+.amount-input {
+    border: none; font-size: 42px; font-weight: 800; width: 200px; outline: none; padding: 0;
+    background: transparent; font-family: inherit; text-align: center; color: var(--text-primary);
+}
+.amount-input::placeholder { color: var(--text-muted); }
+
+.preset-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+.preset-btn {
+    background-color: rgba(0,0,0,0.35); border: 1px solid var(--border-color); padding: 10px 0;
+    border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-family: inherit; color: var(--text-primary); transition: 0.2s;
+}
+.preset-btn:hover { border-color: var(--accent); }
+.preset-btn.selected { background-color: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ===== MODAL PENGATURAN ===== */
+.settings-label {
+    display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    margin: 16px 0 6px; text-align: left; letter-spacing: 0.3px;
+}
+.avatar-upload-row { display: flex; align-items: center; gap: 12px; }
+.avatar-upload-row .modal-avatar {
+    width: 64px; height: 64px; font-size: 24px; margin: 0; flex-shrink: 0;
+}
+.upload-btn {
+    background-color: rgba(255,255,255,0.1); border: 1px solid var(--border-color);
+    color: var(--text-primary); padding: 11px 14px; border-radius: 8px;
+    font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit; transition: 0.2s;
+}
+.upload-btn:hover { background-color: rgba(255,255,255,0.18); }
+.reset-link {
+    background: none; border: none; color: var(--text-muted); font-size: 11px;
+    font-weight: 600; cursor: pointer; margin-top: 6px; font-family: inherit;
+    text-decoration: underline; padding: 0;
+}
+.reset-link:hover { color: var(--text-primary); }
+
+.spinner {
+    border: 4px solid rgba(255,255,255,0.15); border-top: 4px solid var(--accent);
+    border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
